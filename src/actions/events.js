@@ -15,31 +15,23 @@ export const eventStartAddNew = (event) => {
 
         try {
 
-            const data = {
-                title: event.title,
-                nota: event.notes,
-                start: event.start,
-                end: event.end,
-                user: {
-                    uid,
-                    name
-                }
+            event.user = {
+                uid,
+                name
             }
 
-            console.log('data: ', data)
 
-
-            const resp = await fetchConToken('events', data, 'POST');
+            const resp = await fetchConToken('events', event, 'POST');
             const body = await resp.json();
 
-            console.log(body);
+            // console.log(body);
 
             if (body.msg._id !== undefined) {
 
                 // dispatch(eventAddNew(body.msg));
                 const data = {
                     title: body.msg.title,
-                    notes: body.msg.nota,
+                    notes: body.msg.notes,
                     start: moment(body.msg.start).toDate(),
                     end: moment(body.msg.end).toDate(),
                     user: {
@@ -82,7 +74,7 @@ export const eventStartUpdated = (event) => {
             const resp = await fetchConToken(`events/${event._id}`, { event, uid }, 'PUT');
             const body = await resp.json();
 
-            console.log(body);
+            // console.log(body);
 
 
             if (body.msg.user.uid) {
@@ -145,7 +137,7 @@ export const eventStartDeleted = (event) => {
             const resp = await fetchConToken(`events/${event._id}`, { uid }, 'DELETE');
             const body = await resp.json();
 
-            console.log(body);
+            // console.log(body);
 
 
             if (body.msg === "Todo ok") {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { eventStartDeleted } from '../../actions/events.js';
+import { eventStartDeleted } from '../../store/thunks/events';
 
 import '../../styles.css';
 

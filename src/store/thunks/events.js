@@ -1,13 +1,16 @@
-import { types } from "../types/types";
-
-import { fetchConToken, fetchSinToken } from "../helpers/fetch"
-import { prepareEvents } from "../helpers/prepareEvents";
 import Swal from "sweetalert2";
-import moment from "moment";
+
+import { fetchConToken } from "../../helpers/fetch"
+
+import {
+    eventAddNew,
+    eventDeleted,
+    eventLoaded,
+    eventUpdated
+} from "../slices/calendarSlice";
 
 
 export const eventStartAddNew = (event) => {
-
     return async (dispatch, getState) => {
 
         const { uid, name } = getState().auth;
@@ -20,27 +23,12 @@ export const eventStartAddNew = (event) => {
                 name
             }
 
-
             const resp = await fetchConToken('events', event, 'POST');
             const body = await resp.json();
 
-            // console.log(body);
-
             if (body.msg._id !== undefined) {
 
-                // dispatch(eventAddNew(body.msg));
-                const data = {
-                    title: body.msg.title,
-                    notes: body.msg.notes,
-                    start: moment(body.msg.start).toDate(),
-                    end: moment(body.msg.end).toDate(),
-                    user: {
-                        uid: body.msg.user.uid,
-                        name: body.msg.user.name
-                    },
-                    _id: body.msg._id,
-                }
-                dispatch(eventAddNew(data));
+                dispatch(eventAddNew(body.msg));
             }
 
         } catch (error) {
@@ -48,21 +36,6 @@ export const eventStartAddNew = (event) => {
         }
     }
 }
-
-const eventAddNew = (event) => ({
-    type: types.eventAddNew,
-    payload: event
-});
-
-export const eventSetActive = (event) => ({
-    type: types.eventSetActive,
-    payload: event
-});
-
-
-export const eventClearActiveEvent = () => ({
-    type: types.eventClearActiveEvent
-});
 
 export const eventStartUpdated = (event) => {
     return async (dispatch, getState) => {
@@ -74,16 +47,12 @@ export const eventStartUpdated = (event) => {
             const resp = await fetchConToken(`events/${event._id}`, { event, uid }, 'PUT');
             const body = await resp.json();
 
-            // console.log(body);
-
-
             if (body.msg.user.uid) {
-                dispatch(eventUpdated(event));
+                dispatch(eventUpdated({ ...event }));
                 dispatch(eventStartLoaded());
             } else {
                 Swal.fire('Error', body.msg, 'error');
             }
-
 
         } catch (error) {
             console.log(error);
@@ -92,26 +61,17 @@ export const eventStartUpdated = (event) => {
     }
 }
 
-const eventUpdated = (event) => ({
-    type: types.eventUpdated,
-    payload: event
-});
-
 export const eventStartLoaded = () => {
-    return async (dispatch, getState) => {
-
-        const { auth } = getState();
+    return async (dispatch) => {
 
         try {
 
             const resp = await fetchConToken('events');
             const body = await resp.json();
 
-            const prepareEventos = prepareEvents(body.eventos);
-
             if (body.eventos) {
 
-                dispatch(eventLoaded(prepareEventos))
+                dispatch(eventLoaded(body.eventos))
 
             }
 
@@ -121,11 +81,6 @@ export const eventStartLoaded = () => {
 
     }
 }
-
-const eventLoaded = (events) => ({
-    type: types.eventLoaded,
-    payload: events
-});
 
 export const eventStartDeleted = (event) => {
     return async (dispatch, getState) => {
@@ -137,16 +92,13 @@ export const eventStartDeleted = (event) => {
             const resp = await fetchConToken(`events/${event._id}`, { uid }, 'DELETE');
             const body = await resp.json();
 
-            // console.log(body);
-
 
             if (body.msg === "Todo ok") {
-                dispatch(eventDeleted(event));
+                dispatch(eventDeleted({ ...event }));
                 dispatch(eventStartLoaded());
             } else {
                 Swal.fire('Error', body.msg, 'error');
             }
-
 
         } catch (error) {
             console.log(error);
@@ -155,10 +107,3 @@ export const eventStartDeleted = (event) => {
     }
 }
 
-const eventDeleted = () => ({
-    type: types.eventDeleted
-});
-
-export const eventLogout = () => ({
-    type: types.eventLogout
-})

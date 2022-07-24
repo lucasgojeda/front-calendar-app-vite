@@ -1,7 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { startLogout } from '../../actions/auth';
-import { eventLogout } from '../../actions/events';
+
+import { eventLogout } from '../../store/slices/calendarSlice';
+
+import { startLogout } from '../../store/thunks/auth';
+
 
 export const Navbar = () => {
 

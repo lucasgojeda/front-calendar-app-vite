@@ -1,73 +1,68 @@
 import Swal from 'sweetalert2';
 
-import { types } from "../types/types";
-import { fetchConToken, fetchSinToken } from "../helpers/fetch"
+import { fetchConToken, fetchSinToken } from "../../helpers/fetch"
+import {
+    authCheckingFinish,
+    authLogin,
+    authLogout
+} from '../slices/authSlice';
+
 import { eventStartLoaded } from './events';
 
 
 export const StartLogin = (correo, password) => {
-    return async( dispatch ) => {
-
+    return async (dispatch) => {
 
         try {
-            const resp = await fetchSinToken( 'auth/login', { correo, password }, 'POST' );
+
+            const resp = await fetchSinToken('auth/login', { correo, password }, 'POST');
             const body = await resp.json();
 
-
-            if( body.token ) {    
+            if (body.token) {
 
                 localStorage.setItem('token', body.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
 
-
-                dispatch( login({
+                dispatch(authLogin({
                     uid: body.user._id,
-                    name: body.user.name 
-                }) );
-                
-                dispatch( eventStartLoaded() );
+                    name: body.user.name
+                }));
+
+                dispatch(eventStartLoaded());
             } else {
                 console.log(body.msg);
                 return Swal.fire('Error', body.msg, 'error');
             }
-            
+
 
         } catch (error) {
             Swal.fire('Error', error, 'error');
             console.log(error);
         }
     }
-} 
+}
 
-const login = ( user ) => ({
-    type: types.authLogin,
-    payload: user
-})
-
-export const startRegister = ( name, correo, password, role = "ADMIN_ROLE" ) => {
-    return async( dispatch ) => {
-
+export const startRegister = (name, correo, password, role = "ADMIN_ROLE") => {
+    return async (dispatch) => {
 
         try {
-            const resp = await fetchSinToken( 'users', { name, correo, password, role }, 'POST' );
+            const resp = await fetchSinToken('users', { name, correo, password, role }, 'POST');
             const body = await resp.json();
 
-
-            if( body.token ) {    
+            if (body.token) {
 
                 localStorage.setItem('token', body.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
 
-
-                dispatch( login({
+                dispatch(authLogin({
                     uid: body.user._id,
-                    name: body.user.name 
-                }) );
+                    name: body.user.name
+                }));
             } else {
                 console.log(body.errors);
                 return Swal.fire('Error', body.errors[0].msg, 'error');
             }
-            
+
 
         } catch (error) {
             Swal.fire('Error', error, 'error');
@@ -78,27 +73,26 @@ export const startRegister = ( name, correo, password, role = "ADMIN_ROLE" ) => 
 }
 
 export const startChecking = () => {
-    return async( dispatch ) => {
+    return async (dispatch) => {
 
         try {
-            const resp = await fetchConToken( 'auth/renew');
-            
-            if( resp !== undefined) {
+            const resp = await fetchConToken('auth/renew');
+
+            if (resp !== undefined) {
 
                 const body = await resp.json();
-                
+
                 localStorage.setItem('token', body.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
-    
-    
-                dispatch( login({
+
+                dispatch(authLogin({
                     uid: body.uid,
-                    name: body.name 
-                }) );
+                    name: body.name
+                }));
             } else {
-                dispatch( checkingFinish() );
+                dispatch(authCheckingFinish());
             }
-            
+
         } catch (error) {
             console.log(error);
         }
@@ -106,17 +100,11 @@ export const startChecking = () => {
     }
 }
 
-const checkingFinish = () => ({
-    type: types.authCheckingFinish
-})
-
 export const startLogout = () => {
-    return ( dispatch ) => {
-        
+    return (dispatch) => {
+
         localStorage.clear();
-    
-        dispatch( logout() )
+
+        dispatch(authLogout())
     }
 }
-
-const logout = () => ({ type: types.authLogout })

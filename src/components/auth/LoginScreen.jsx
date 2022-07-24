@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { StartLogin, startRegister } from '../../actions/auth';
+import { StartLogin, startRegister } from '../../store/thunks/auth';
+
 import { useForm } from '../../hooks/useForm';
+
 import './login.css';
 
 

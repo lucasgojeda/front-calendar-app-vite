@@ -7,13 +7,18 @@ import { useForm } from '../../hooks/useForm';
 
 import './login.css';
 
-
+/**
+ * Este componente es aquel mediante el cuál el usuario podrá iniciar sesión 
+ * o registrarse en la aplicación.
+ * @module LoginScreen
+ */
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
     
-    //Manejo del login
-    
+    /**
+     * Login
+     */
     const [ formLoginValues, handleLoginInputChange ] = useForm({
         lCorreo: 'test20@test.com',
         lPassword: '123456'
@@ -30,7 +35,9 @@ export const LoginScreen = () => {
     }
     
 
-    //Manejo del register
+    /**
+     * Register
+     */
     const [ formRegisterValues, handleRegisterInputChange ] = useForm({
         rName: 'test',
         rCorreo: 'test20@test.com',

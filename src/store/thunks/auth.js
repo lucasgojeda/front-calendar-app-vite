@@ -9,7 +9,18 @@ import {
 
 import { eventStartLoaded } from './events';
 
+/**
+ * En este archivo encontramos todas las acciones relacionadas a la autenticación.
+ * @module thunk-auth
+ */
 
+/**
+ * Esta función realiza el inicio de sesión.
+ * @function
+ * @async
+ * @param {String} correo - Correo del usuario.
+ * @param {String} password - Contraseña del usuario.
+ */
 export const StartLogin = (correo, password) => {
     return async (dispatch) => {
 
@@ -42,6 +53,15 @@ export const StartLogin = (correo, password) => {
     }
 }
 
+/**
+ * Esta función realiza el registro de un nuevo usuario.
+ * @function
+ * @async
+ * @param {String} name - Nombre del nuevo usuario.
+ * @param {String} correo - Correo del nuevo usuario.
+ * @param {String} password - Contraseña del nuevo usuario.
+ * @param {String} role - Role del nuevo usuario (usuario por defecto).
+ */
 export const startRegister = (name, correo, password, role = "ADMIN_ROLE") => {
     return async (dispatch) => {
 
@@ -72,6 +92,12 @@ export const startRegister = (name, correo, password, role = "ADMIN_ROLE") => {
 
 }
 
+/**
+ * Esta función realiza el chequeo de si un usuario está logueado mediante la 
+ * autenticación por token cada vez que recarga la pagina.
+ * @function
+ * @async
+ */
 export const startChecking = () => {
     return async (dispatch) => {
 
@@ -100,6 +126,12 @@ export const startChecking = () => {
     }
 }
 
+/**
+ * Esta función realiza el cierre de sesión en la aplicación limpiando el localStorage 
+ * y los datos del usuario del store en redux.
+ * @function
+ * @async
+ */
 export const startLogout = () => {
     return (dispatch) => {
 

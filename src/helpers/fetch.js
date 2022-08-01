@@ -1,8 +1,13 @@
-import moment from 'moment';
-
 const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-
+/**
+ * Esta función realiza peticiones http sin ningún token en dichas peticiones.
+ * @function
+ * @async
+ * @param {String} endPoint - Endpoint del api para hacer la petición. Ej: 'events'.
+ * @param {Object} data - Información a ser enviada a dicha api.
+ * @param {String} method - Metodo de la petición. Ej: 'POST'.
+ */
 export const fetchSinToken = (endPoint, data, method = 'GET') => {
 
     const url = `${baseUrl}/${endPoint} `; // localhost:3030/api/
@@ -24,6 +29,14 @@ export const fetchSinToken = (endPoint, data, method = 'GET') => {
     }
 }
 
+/**
+ * Esta función realiza peticiones http con un token en las peticiones.
+ * @function
+ * @async
+ * @param {String} endPoint - Endpoint del api para hacer la petición. Ej: 'events'.
+ * @param {Object} data - Información a ser enviada a dicha api.
+ * @param {String} method - Metodo de la petición. Ej: 'POST'.
+ */
 export const fetchConToken = (endPoint, data, method = 'GET') => {
 
     const url = `${baseUrl}/${endPoint} `; // localhost:3030/api/

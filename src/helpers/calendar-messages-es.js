@@ -1,3 +1,7 @@
+
+/**
+ * Con esto traducimos el "react-big-calendar" al español.
+ */
 export const messages = {
     allDay: 'Todo el día',
     previous: '<',

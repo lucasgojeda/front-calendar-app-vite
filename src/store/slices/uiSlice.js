@@ -6,10 +6,16 @@ export const uiSlice = createSlice({
     modalOpen: false
   },
   reducers: {
+    /**
+     * Abre el modal de eventos.
+     */
     uiOpenModal: (state) => {
 
       state.modalOpen = true;
     },
+    /**
+     * Cierra el modal de eventos.
+     */
     uiCloseModal: (state) => {
 
       state.modalOpen = false;

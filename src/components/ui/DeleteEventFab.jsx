@@ -5,13 +5,19 @@ import { eventStartDeleted } from '../../store/thunks/events';
 
 import '../../styles.css';
 
-
+/**
+ * Este componente se encarga de ser el botón para eliminar eventos en la aplicación.
+ * @module DeleteEventFab
+ */
 export const DeleteEventFab = () => {
 
     const { activeEvent } = useSelector( state => state.calendar );
 
     const dispatch = useDispatch();
 
+    /**
+     * Con la siguiente función eliminamos un evento.
+     */
     const handleDelete = () => {
 
         dispatch( eventStartDeleted(activeEvent) );

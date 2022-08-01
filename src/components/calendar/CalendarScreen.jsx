@@ -31,18 +31,11 @@ moment.locale('es');
 const localizer = momentLocalizer(moment);
 
 
-// const myEventsList = [{
-//     title: 'Cumpleaños del jefe',
-//     start: moment().toDate(), //Sinonimo de hacer un new Date()
-//     end: moment().add( 2, 'hours' ).toDate(),
-//     bgcolor: '#fafafa',
-//     notes: 'Comprar el pastel',
-//     user: {
-//         _id: '123',
-//         name: 'Fernando'
-//     }
-// }]
-
+/**
+ * Este componente es la vista principal de la aplicación que contiene los componentes 
+ * que hacen al funcionamiento de la misma.
+ * @module CalendarScreen
+ */
 export const CalendarScreen = () => {
 
     const dispatch = useDispatch();
@@ -53,18 +46,33 @@ export const CalendarScreen = () => {
 
     const { uid } = useSelector(state => state.auth);
 
+    /**
+     * El siguiente useState es para guardar los valores del ultimo lugar en el cuál el 
+     * usuario estuvo, para llevarlo allí en el proximo inicio de sesión.
+     */
     const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month');
 
+    /**
+     * El siguiente useEffect se encarga de volver a cargar el array de eventos cada vez 
+     * que se renderice este componente.
+     */
     useEffect(() => {
 
         dispatch(eventStartLoaded())
 
     }, [dispatch]);
 
+    /**
+     * La siguiente función abre el modal que edita los eventos.
+     */
     const onDoubleClick = (e) => {
         dispatch(uiOpenModal());
     }
 
+    /**
+     * La siguiente función marca el evento seleccionado por el usuario como activo 
+     * para poder ser editado o eliminado.
+     */
     const onSelectEvent = (e) => {
 
         const eventSelected = events.filter(event => (event._id === e._id) && event);
@@ -72,15 +80,25 @@ export const CalendarScreen = () => {
         dispatch(eventSetActive(eventSelected[0]));
     }
 
+    /**
+     * La siguiente función quita el evento que esté como activo de dicha situación.
+     */
     const onSelectSlot = (e) => {
         dispatch(eventClearActiveEvent());
     }
 
+    /**
+     * La siguiente función guarda en localStorage el lugar donde se encuentre el usuario 
+     * cada vez que el mismo cambie de vista dentro de la aplicación.
+     */
     const onViewChange = (e) => {
         setLastView(e);
         localStorage.setItem('lastView', e);
     }
 
+    /**
+     * La siguiente función se encarga de los estilos del Calendar.
+     */
     const eventStyleGetter = (event, start, end, isSelected) => {
 
         const style = {
@@ -97,6 +115,9 @@ export const CalendarScreen = () => {
         }
     }
 
+    /**
+     * Preparamos los eventos con el formato adecuado.
+     */
     const preparedEvents = prepareEvents(events);
 
     return (

@@ -9,7 +9,27 @@ import {
     eventUpdated
 } from "../slices/calendarSlice";
 
+/**
+ * En este archivo encontramos todas las acciones relacionadas con los eventos.
+ * @module thunk-events
+ * @example evento = {
+ *     title: 'Cumpleaños del jefe',
+ *     start: Date,
+ *     end: Date,
+ *     notes: 'Comprar el pastel',
+ *     user: {
+ *         _id: '123',
+ *         name: 'Fernando'
+ *     }
+ * }
+ */
 
+/**
+ * Esta función se encarga de crear un nuevo evento.
+ * @function
+ * @async
+ * @param {Object} event - Evento a ser creado.
+ */
 export const eventStartAddNew = (event) => {
     return async (dispatch, getState) => {
 
@@ -37,6 +57,12 @@ export const eventStartAddNew = (event) => {
     }
 }
 
+/**
+ * Esta función se encarga de actualizar un evento.
+ * @function
+ * @async
+ * @param {Object} event - Evento a ser actualizado.
+ */
 export const eventStartUpdated = (event) => {
     return async (dispatch, getState) => {
 
@@ -61,6 +87,11 @@ export const eventStartUpdated = (event) => {
     }
 }
 
+/**
+ * Esta función se encarga de cargar todas los eventos.
+ * @function
+ * @async
+ */
 export const eventStartLoaded = () => {
     return async (dispatch) => {
 
@@ -82,6 +113,12 @@ export const eventStartLoaded = () => {
     }
 }
 
+/**
+ * Esta función se encarga de eliminar un evento.
+ * @function
+ * @async
+ * @param {Object} event - Evento a ser eliminado.
+ */
 export const eventStartDeleted = (event) => {
     return async (dispatch, getState) => {
 

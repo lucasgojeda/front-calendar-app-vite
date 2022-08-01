@@ -31,6 +31,10 @@ const startInit = moment().minutes(0).seconds(0).add(1, 'hours');
 const endInit = startInit.clone().add(1, 'hours');
 
 
+/**
+ * Este componente es el modal que se encargará de crear y editar los eventos.
+ * @module CalendarModal
+ */
 export const CalendarModal = () => {
 
     const dispatch = useDispatch();
@@ -50,11 +54,16 @@ export const CalendarModal = () => {
     const [start, setStart] = useState(startInit.toDate());
     const [end, setEnd] = useState(endInit.toDate());
 
-
     const [formValues, setFormValues] = useState(initEvent);
     const [titleValid, setTitleValid] = useState(true);
     const { title, notes } = formValues;
 
+    /**
+     * El siguiente useEffect coloca los valores de un evento seleccionado si este fue 
+     * marcado como activo o los valores iniciales de un evento al ser creado, así 
+     * controlamos que valores se van a mostrar dentro del modal dependiendo de si lo 
+     * que estamos haciendo es editando un evento o creando uno nuevo.
+     */
     useEffect(() => {
 
         if (activeEvent) {
@@ -66,7 +75,10 @@ export const CalendarModal = () => {
 
     }, [activeEvent, setFormValues]);
 
-
+    /**
+     * Con la siguiente función actualizamos los valores del modal cuando cada input 
+     * cambie de valor.
+     */
     const handleInputChange = ({ target }) => {
         setFormValues({
             ...formValues,
@@ -74,13 +86,16 @@ export const CalendarModal = () => {
         })
     }
 
+    /**
+     * La siguiente función cierra el modal, limpia el evento activo del store y 
+     * pone los valores iniciales del formulario del modal.
+     */
     const closeModal = (e) => {
         dispatch(uiCloseModal());
         dispatch(eventClearActiveEvent());
 
         setFormValues(initEvent);
     }
-
 
     const handleStartDateChange = (e) => {
         setStart(e);
@@ -99,6 +114,10 @@ export const CalendarModal = () => {
         })
     }
 
+    /**
+     * Esta función se va a ejecutar al realizar el submit del formulario, ya sea para 
+     * crear o para editar una nota.
+     */
     const handleSubmitForm = (e) => {
         e.preventDefault();
 
@@ -107,6 +126,10 @@ export const CalendarModal = () => {
         const momentStart = moment(start);
         const momentEnd = moment(end);
 
+        /**
+         * Si la fecha inicial es igual o posterior a la fecha de finalización del 
+         * evento arrojará un error.
+         */
         if (momentStart.isSameOrAfter(momentEnd)) {
             return Swal.fire(
                 'Error',
@@ -119,6 +142,10 @@ export const CalendarModal = () => {
             return setTitleValid(false);
         }
 
+        /**
+         * Si existe un evento activo se realizará el dispatch para actualizar un 
+         * evento, de lo contrario se realizará el dispatch para crear uno.
+         */
         if (activeEvent != null) {
             dispatch(eventStartUpdated(formValues))
         } else {

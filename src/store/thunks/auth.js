@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import { authApi } from '../../api/authApi';
 
 import { fetchConToken, fetchSinToken } from "../../helpers/fetch"
 import {
@@ -26,8 +27,7 @@ export const StartLogin = (correo, password) => {
 
         try {
 
-            const resp = await fetchSinToken('auth/login', { correo, password }, 'POST');
-            const body = await resp.json();
+            const { data: body } = await authApi.post('auth/login', { correo, password });
 
             if (body.token) {
 
@@ -66,8 +66,8 @@ export const startRegister = (name, correo, password, role = "ADMIN_ROLE") => {
     return async (dispatch) => {
 
         try {
-            const resp = await fetchSinToken('users', { name, correo, password, role }, 'POST');
-            const body = await resp.json();
+
+            const { data: body } = await authApi.post('users', { name, correo, password, role });
 
             if (body.token) {
 
@@ -102,18 +102,17 @@ export const startChecking = () => {
     return async (dispatch) => {
 
         try {
-            const resp = await fetchConToken('auth/renew');
 
-            if (resp !== undefined) {
+            const { data } = await authApi.get('auth/renew');
 
-                const body = await resp.json();
+            if (data !== undefined) {
 
-                localStorage.setItem('token', body.token);
+                localStorage.setItem('token', data.token);
                 localStorage.setItem('token-init-date', new Date().getTime());
 
                 dispatch(authLogin({
-                    uid: body.uid,
-                    name: body.name
+                    uid: data.uid,
+                    name: data.name
                 }));
             } else {
                 dispatch(authCheckingFinish());

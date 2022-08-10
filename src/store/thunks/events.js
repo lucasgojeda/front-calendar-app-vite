@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { eventsApi } from "../../api/eventsApi";
 
 import { fetchConToken } from "../../helpers/fetch"
 
@@ -22,7 +23,7 @@ import {
  *         name: 'Fernando'
  *     }
  * }
- */
+ */ 
 
 /**
  * Esta función se encarga de crear un nuevo evento.
@@ -43,12 +44,11 @@ export const eventStartAddNew = (event) => {
                 name
             }
 
-            const resp = await fetchConToken('events', event, 'POST');
-            const body = await resp.json();
+            const { data: { msg } } = await eventsApi.post('events', event);
 
-            if (body.msg._id !== undefined) {
+            if (msg._id !== undefined) {
 
-                dispatch(eventAddNew(body.msg));
+                dispatch(eventAddNew(msg));
             }
 
         } catch (error) {
@@ -70,14 +70,13 @@ export const eventStartUpdated = (event) => {
 
             const { uid } = getState().auth;
 
-            const resp = await fetchConToken(`events/${event._id}`, { event, uid }, 'PUT');
-            const body = await resp.json();
+            const { data: { msg } } = await eventsApi.put(`events/${event._id}`, { event, uid });
 
-            if (body.msg.user.uid) {
-                dispatch(eventUpdated({ ...event }));
+            if (msg.user.uid) {
+                dispatch(eventUpdated({ ...msg }));
                 dispatch(eventStartLoaded());
             } else {
-                Swal.fire('Error', body.msg, 'error');
+                Swal.fire('Error', msg, 'error');
             }
 
         } catch (error) {
@@ -97,12 +96,11 @@ export const eventStartLoaded = () => {
 
         try {
 
-            const resp = await fetchConToken('events');
-            const body = await resp.json();
+            const { data: { eventos } } = await eventsApi.get('events');
 
-            if (body.eventos) {
+            if (eventos) {
 
-                dispatch(eventLoaded(body.eventos))
+                dispatch(eventLoaded(eventos))
 
             }
 
@@ -128,7 +126,6 @@ export const eventStartDeleted = (event) => {
 
             const resp = await fetchConToken(`events/${event._id}`, { uid }, 'DELETE');
             const body = await resp.json();
-
 
             if (body.msg === "Todo ok") {
                 dispatch(eventDeleted({ ...event }));

@@ -1,7 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { eventStartDeleted } from '../../store/thunks/events';
+import { useCalendarStore } from '../../hooks/useCalendarStore';
 
 import '../../styles.css';
 
@@ -11,20 +9,19 @@ import '../../styles.css';
  */
 export const DeleteEventFab = () => {
 
-    const { activeEvent } = useSelector( state => state.calendar );
-
-    const dispatch = useDispatch();
+    const { activeEvent, eventStartDeleted } = useCalendarStore();
 
     /**
      * Con la siguiente función eliminamos un evento.
      */
     const handleDelete = () => {
 
-        dispatch( eventStartDeleted(activeEvent) );
+        eventStartDeleted(activeEvent);
     }
 
-    return(
+    return (
         <button
+            aria-label='btn-danger'
             className="btn btn-danger fab-danger"
             onClick={handleDelete}
         >

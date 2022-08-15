@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 
 import { CalendarApp } from './CalendarApp'
+import { BrowserRouter } from 'react-router-dom';
 
 /**
  * En este componente se encuentra insertado el store y es el punto más alto de la 
@@ -13,9 +14,11 @@ import { CalendarApp } from './CalendarApp'
  * @module main
  */
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Provider store={store}>
+  //<React.StrictMode>
+  <Provider store={store}>
+    <BrowserRouter>
       <CalendarApp />
-    </Provider>
-  </React.StrictMode> 
+    </BrowserRouter>
+  </Provider>
+  //</React.StrictMode>
 )

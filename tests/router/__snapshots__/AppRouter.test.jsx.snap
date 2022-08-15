@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en el componente AppRouter debe de mostrar el login en caso de no estar autenticado 1`] = `
+<div>
+  <div
+    class="container login-container"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6 login-form-1"
+      >
+        <h3>
+          Ingreso
+        </h3>
+        <form>
+          <div
+            class="form-group"
+          >
+            <input
+              class="form-control"
+              name="lCorreo"
+              placeholder="Correo"
+              type="text"
+              value="test20@test.com"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <input
+              class="form-control"
+              name="lPassword"
+              placeholder="Contraseña"
+              type="password"
+              value="123456"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <input
+              class="btnSubmit"
+              type="submit"
+              value="Login"
+            />
+          </div>
+        </form>
+      </div>
+      <div
+        class="col-md-6 login-form-2"
+      >
+        <h3>
+          Registro
+        </h3>
+        <form>
+          <div
+            class="form-group"
+          >
+            <input
+              class="form-control"
+              name="rName"
+              placeholder="Nombre"
+              type="text"
+              value="test"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <input
+              class="form-control"
+              name="rCorreo"
+              placeholder="Correo"
+              type="email"
+              value="test20@test.com"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <input
+              class="form-control"
+              name="rPassword"
+              placeholder="Contraseña"
+              type="password"
+              value="123456"
+            />
+          </div>
+          <div
+            class="form-group"
+          >
+            <input
+              class="btnSubmit"
+              type="submit"
+              value="Crear cuenta"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

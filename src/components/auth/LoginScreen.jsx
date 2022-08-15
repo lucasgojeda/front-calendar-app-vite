@@ -1,9 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-
-import { StartLogin, startRegister } from '../../store/thunks/auth';
 
 import { useForm } from '../../hooks/useForm';
+
+import { useAuthStore } from '../../hooks/useAuthStore';
 
 import './login.css';
 
@@ -14,12 +13,12 @@ import './login.css';
  */
 export const LoginScreen = () => {
 
-    const dispatch = useDispatch();
-    
+    const { StartLogin, startRegister } = useAuthStore();
+
     /**
      * Login
      */
-    const [ formLoginValues, handleLoginInputChange ] = useForm({
+    const [formLoginValues, handleLoginInputChange] = useForm({
         lCorreo: 'test20@test.com',
         lPassword: '123456'
 
@@ -30,31 +29,31 @@ export const LoginScreen = () => {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        dispatch( StartLogin(lCorreo, lPassword) );
+        StartLogin(lCorreo, lPassword);
 
     }
-    
+
 
     /**
      * Register
      */
-    const [ formRegisterValues, handleRegisterInputChange ] = useForm({
+    const [formRegisterValues, handleRegisterInputChange] = useForm({
         rName: 'test',
         rCorreo: 'test20@test.com',
         rPassword: '123456'
 
     });
-    const {  rName, rCorreo, rPassword } = formRegisterValues;
+    const { rName, rCorreo, rPassword } = formRegisterValues;
 
 
     const handleRegister = (e) => {
         e.preventDefault();
 
-        dispatch( startRegister( rName, rCorreo, rPassword) );
+        startRegister(rName, rCorreo, rPassword);
 
     }
-    
-    
+
+
     return (
         <div className="container login-container">
             <div className="row">
@@ -64,7 +63,7 @@ export const LoginScreen = () => {
                         onSubmit={handleLogin}
                     >
                         <div className="form-group">
-                            <input 
+                            <input
                                 type="text"
                                 className="form-control"
                                 placeholder="Correo"
@@ -84,10 +83,10 @@ export const LoginScreen = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <input 
+                            <input
                                 type="submit"
                                 className="btnSubmit"
-                                value="Login" 
+                                value="Login"
                             />
                         </div>
                     </form>
@@ -131,9 +130,9 @@ export const LoginScreen = () => {
                         </div>
 
                         <div className="form-group">
-                            <input 
-                                type="submit" 
-                                className="btnSubmit" 
+                            <input
+                                type="submit"
+                                className="btnSubmit"
                                 value="Crear cuenta" />
                         </div>
                     </form>

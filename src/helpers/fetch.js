@@ -1,4 +1,6 @@
-const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
+import { getEnvironmets } from "./getEnvironmets";
+
+const { VITE_REACT_APP_API_URL: baseUrl } = getEnvironmets()
 
 /**
  * Esta función realiza peticiones http sin ningún token en dichas peticiones.

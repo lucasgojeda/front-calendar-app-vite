@@ -9,11 +9,13 @@ import { uiSlice } from './slices/uiSlice';
  * los slices que lo constituyen.
  * @module store
  */
-export const store = configureStore({
+ export const store = configureStore({
   reducer: {
-    
-      auth: authSlice.reducer,
+      auth:     authSlice.reducer,
       calendar: calendarSlice.reducer,
-      ui: uiSlice.reducer,
+      ui:       uiSlice.reducer
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+      serializableCheck: false
+  })
 })

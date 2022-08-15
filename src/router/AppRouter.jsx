@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
     Routes,
     Route,
@@ -7,12 +6,14 @@ import {
     Navigate
 } from "react-router-dom";
 
-import { startChecking } from '../store/thunks/auth';
 
 import { LoginScreen } from '../components/auth/LoginScreen';
 import { CalendarScreen } from '../components/calendar/CalendarScreen';
+
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
+
+import { useAuthStore } from '../hooks/useAuthStore';
 
 /**
  * Este componente maneja las rutas "/login" y "/*", que coresponden a 
@@ -21,18 +22,17 @@ import { PublicRoute } from './PublicRoute';
  */
 export const AppRouter = () => {
 
-    const dispatch = useDispatch();
-    const { checking, uid } = useSelector(state => state.auth);
+    const { checking, uid, startChecking } = useAuthStore();
 
-    /**
+    /** 
      * El siguiente useEffect se encarga de realizar el chequeo del usuario cada vez que 
      * se renderiza este componente.
      */
     useEffect(() => {
 
-        dispatch(startChecking());
+        startChecking();
 
-    }, [dispatch]);
+    }, []);
 
     /**
      * Si el estado del inicio de sesión del usuario aún no ha sido verificado, entonces 
@@ -43,7 +43,6 @@ export const AppRouter = () => {
     }
 
     return (
-        <BrowserRouter>
             <Routes>
 
                 <Route path="/login" element={
@@ -61,6 +60,5 @@ export const AppRouter = () => {
                 <Route path="/*" element={<Navigate to="/" />} />
 
             </Routes>
-        </BrowserRouter>
     );
 };

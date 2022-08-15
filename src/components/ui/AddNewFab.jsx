@@ -1,7 +1,6 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
-import { uiOpenModal } from '../../store/slices/uiSlice';
+import { useUiStore } from '../../hooks/useUiStore';
 
 import '../../styles.css';
 
@@ -11,13 +10,13 @@ import '../../styles.css';
  */
 export const AddNewFab = () => {
 
-    const dispatch = useDispatch();
+    const { startUiOpenModal } = useUiStore();
 
     /**
      * Con la siguiente función abrimos el modal para así poder crear un nuevo evento.
      */
     const handleClickNew = () => {
-        dispatch(uiOpenModal());
+        startUiOpenModal();
     }
 
     return (

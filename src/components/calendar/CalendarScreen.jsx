@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -14,16 +13,13 @@ import { DeleteEventFab } from '../ui/DeleteEventFab';
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 
-import { uiOpenModal } from '../../store/slices/uiSlice';
-import {
-    eventClearActiveEvent,
-    eventSetActive
-} from '../../store/slices/calendarSlice';
-
-import { eventStartLoaded } from '../../store/thunks/events';
 
 import { prepareEvents } from '../../helpers/prepareEvents';
 import { messages } from '../../helpers/calendar-messages-es';
+
+import { useAuthStore } from '../../hooks/useAuthStore';
+import { useCalendarStore } from '../../hooks/useCalendarStore';
+import { useUiStore } from '../../hooks/useUiStore';
 
 import '../../styles.css';
 
@@ -38,13 +34,17 @@ const localizer = momentLocalizer(moment);
  */
 export const CalendarScreen = () => {
 
-    const dispatch = useDispatch();
+    const { 
+        events, 
+        activeEvent, 
+        eventStartLoaded,
+        startEventClearActiveEvent,
+        startEventSetActive
+    } = useCalendarStore();
 
-    const { activeEvent } = useSelector(state => state.calendar);
+    const { startUiOpenModal } = useUiStore();
 
-    const { events } = useSelector(state => state.calendar);
-
-    const { uid } = useSelector(state => state.auth);
+    const { uid } = useAuthStore();
 
     /**
      * El siguiente useState es para guardar los valores del ultimo lugar en el cuál el 
@@ -58,15 +58,15 @@ export const CalendarScreen = () => {
      */
     useEffect(() => {
 
-        dispatch(eventStartLoaded())
+        eventStartLoaded();
 
-    }, [dispatch]);
+    }, []);
 
     /**
      * La siguiente función abre el modal que edita los eventos.
      */
     const onDoubleClick = (e) => {
-        dispatch(uiOpenModal());
+        startUiOpenModal();
     }
 
     /**
@@ -77,14 +77,14 @@ export const CalendarScreen = () => {
 
         const eventSelected = events.filter(event => (event._id === e._id) && event);
 
-        dispatch(eventSetActive(eventSelected[0]));
+        startEventSetActive(eventSelected[0]);
     }
 
-    /**
+    /** 
      * La siguiente función quita el evento que esté como activo de dicha situación.
      */
     const onSelectSlot = (e) => {
-        dispatch(eventClearActiveEvent());
+        startEventClearActiveEvent();
     }
 
     /**

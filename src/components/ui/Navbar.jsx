@@ -1,9 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { eventLogout } from '../../store/slices/calendarSlice';
+import { useAuthStore } from '../../hooks/useAuthStore';
+import { useCalendarStore } from '../../hooks/useCalendarStore';
 
-import { startLogout } from '../../store/thunks/auth';
 
 /**
  * Este componente contiene el botón "Salir" para cerrar sesión.
@@ -11,9 +10,8 @@ import { startLogout } from '../../store/thunks/auth';
  */
 export const Navbar = () => {
 
-    const { name } = useSelector(state => state.auth);
-
-    const dispatch = useDispatch();
+    const { name, startLogout } = useAuthStore();
+    const { startEventLogout } = useCalendarStore();
 
     /**
      * La siguiente función cierra sesión eliminando la información del usuario del store 
@@ -21,8 +19,8 @@ export const Navbar = () => {
      */
     const handleLogout = () => {
 
-        dispatch(startLogout());
-        dispatch(eventLogout());
+        startLogout();
+        startEventLogout();
     }
 
 

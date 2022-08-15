@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import DateTimePicker from 'react-datetime-picker';
 import Modal from 'react-modal';
 
-import { uiCloseModal } from '../../store/slices/uiSlice';
-import { eventClearActiveEvent } from '../../store/slices/calendarSlice';
-
-import {
-    eventStartAddNew,
-    eventStartUpdated
-} from '../../store/thunks/events';
+import { useCalendarStore } from '../../hooks/useCalendarStore';
+import { useUiStore } from '../../hooks/useUiStore';
+import { getEnvironmets } from '../../helpers/getEnvironmets';
 
 const customStyles = {
     content: {
@@ -25,7 +20,9 @@ const customStyles = {
     },
 };
 
-Modal.setAppElement('#root');
+if (getEnvironmets().VITE_MODE !== 'test') {
+    Modal.setAppElement('#root');
+}
 
 const startInit = moment().minutes(0).seconds(0).add(1, 'hours');
 const endInit = startInit.clone().add(1, 'hours');
@@ -37,10 +34,13 @@ const endInit = startInit.clone().add(1, 'hours');
  */
 export const CalendarModal = () => {
 
-    const dispatch = useDispatch();
-
-    const { modalOpen } = useSelector(state => state.ui);
-    const { activeEvent } = useSelector(state => state.calendar);
+    const { modalOpen, startUiCloseModal } = useUiStore();
+    const {
+        activeEvent,
+        eventStartAddNew,
+        eventStartUpdated,
+        startEventClearActiveEvent
+    } = useCalendarStore();
 
 
     const initEvent = {
@@ -91,8 +91,8 @@ export const CalendarModal = () => {
      * pone los valores iniciales del formulario del modal.
      */
     const closeModal = (e) => {
-        dispatch(uiCloseModal());
-        dispatch(eventClearActiveEvent());
+        startUiCloseModal();
+        startEventClearActiveEvent();
 
         setFormValues(initEvent);
     }
@@ -147,9 +147,9 @@ export const CalendarModal = () => {
          * evento, de lo contrario se realizará el dispatch para crear uno.
          */
         if (activeEvent != null) {
-            dispatch(eventStartUpdated(formValues))
+            eventStartUpdated(formValues);
         } else {
-            dispatch(eventStartAddNew(formValues));
+            eventStartAddNew(formValues);
         }
 
         setTitleValid(true);

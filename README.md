@@ -1,24 +1,23 @@
 # Calendar App
 
-_Aplicación para agendar eventos_
+_Application to schedule events_
 
-## Requisitos y tutorial 🚀
+## Requirements and tutorial 🚀
 
-Para hacer funcionar este proyecto se requiere como primero tener instalado
-**node js**
+To make this project work it is required as first to have installed **node js**
 
-Luego se requiere introducir el siguiente comando en la consola:
+Then it is required to enter the following command in the console:
 ```
 $ npm i
 ```
 
-Después debe asegurarse que la variable de entorno correspondiente a la dirección del api esté correctamente colocada en las variables de entorno, ya está colocada una por defecto apuntando a un [backend desarrollado en node js](https://github.com/lukitasojeda/back-calendar-app-vite).
+Then you must make sure that the environment variable corresponding to the api address is correctly set in the environment variables, one is already set by default pointing to a [backend developed on node js](https://github.com/lukitasojeda/ back-calendar-app-vite).
 
-Listo, la aplicación ya está lista para ser iniciada con el siguiente comando:
+Done, the application is ready to be started with the following command:
 ```
 $ npm run dev
 ```
 
-## Documentación 🖇️
+## Documentation 🖇️
 
-Por favor dirijase a la [documentación](https://lucasgojeda.github.io/front-calendar-app-vite/) para obetener detalles acerca del funcionamiento del código.
+Please refer to the [documentation](https://lucasgojeda.github.io/front-calendar-app-vite/) for details on how the code works.

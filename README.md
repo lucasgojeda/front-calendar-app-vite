@@ -11,7 +11,7 @@ Then it is required to enter the following command in the console:
 $ npm i
 ```
 
-Then you must make sure that the environment variable corresponding to the api address is correctly set in the environment variables, one is already set by default pointing to a [backend developed on node js](https://github.com/lukitasojeda/ back-calendar-app-vite).
+Then you must make sure that the environment variable corresponding to the api address is correctly set in the environment variables, one is already set by default pointing to a [backend developed on node js](https://github.com/lukitasojeda/back-calendar-app-vite).
 
 Done, the application is ready to be started with the following command:
 ```

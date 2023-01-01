@@ -7,8 +7,10 @@ import { fetchConToken } from "../helpers/fetch"
 
 import {
     eventAddNew,
+    eventClearActiveEvent,
     eventDeleted,
     eventLoaded,
+    eventLogout,
     eventSetActive,
     eventUpdated
 } from "../store/slices/calendarSlice";

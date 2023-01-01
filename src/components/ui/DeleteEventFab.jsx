@@ -26,7 +26,7 @@ export const DeleteEventFab = () => {
             onClick={handleDelete}
         >
             <i className="fas fa-trash"></i>
-            <span> Borrar evento </span>
+            <span> Remove event </span>
         </button>
     );
 };

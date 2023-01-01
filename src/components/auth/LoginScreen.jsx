@@ -58,7 +58,7 @@ export const LoginScreen = () => {
         <div className="container login-container">
             <div className="row">
                 <div className="col-md-6 login-form-1">
-                    <h3>Ingreso</h3>
+                    <h3>Login</h3>
                     <form
                         onSubmit={handleLogin}
                     >
@@ -93,7 +93,7 @@ export const LoginScreen = () => {
                 </div>
 
                 <div className="col-md-6 login-form-2">
-                    <h3>Registro</h3>
+                    <h3>Sign in</h3>
                     <form
                         onSubmit={handleRegister}
                     >
@@ -133,7 +133,7 @@ export const LoginScreen = () => {
                             <input
                                 type="submit"
                                 className="btnSubmit"
-                                value="Crear cuenta" />
+                                value="Register" />
                         </div>
                     </form>
                 </div>

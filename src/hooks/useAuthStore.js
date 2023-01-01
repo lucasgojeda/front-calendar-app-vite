@@ -57,7 +57,7 @@ export const useAuthStore = () => {
             if (getEnvironmets().VITE_MODE !== 'test') {
 
                 console.log(error);
-                Swal.fire('Error', error, 'error');
+                // Swal.fire('Error', error, 'error');
 
             }
         }
